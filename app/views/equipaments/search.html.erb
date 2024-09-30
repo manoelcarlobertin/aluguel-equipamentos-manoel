@@ -1,0 +1,10 @@
+<h1>Resultados da busca por equipamentos</h1>
+<% if @equipaments.present? %>
+  <ul>
+    <% @equipaments.each do |equipament| %>
+      <li><%= equipament.name %> - <%= equipament.serial_number %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Nenhum equipamento encontrado</p>
+<% end %>

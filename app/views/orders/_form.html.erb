@@ -1,0 +1,40 @@
+<div id="kt_content_container" class="container-xxl">
+  <div class="card">
+    <%= simple_form_for @order do |form| %>
+      <div class="card-body">
+        <%= form.input :customer_id, required: true do %>
+          <div data-controller="autocomplete" data-autocomplete-url-value="<%= search_customers_path %>" role="combobox">
+            <input type="text" class="form-control" data-autocomplete-target="input" value="<%= form.object.customer&.name %>" />
+            <%= form.input_field :customer_id, as: :hidden, data: { autocomplete_target: "hidden" } %>
+            <ul class="list-group" data-autocomplete-target="results"></ul>
+          </div>
+          <%= form.full_error :customer %>
+        <% end %>
+
+        <div class="row" data-controller="order-equipament" data-order-equipament-url-value="<%= search_equipaments_path %>">
+          <div class="col-12 col-md-6">
+            <%= form.input :period_start, html5: true, input_html: { data: { order_equipament_target: "periodStart" } } %>
+          </div>
+          <div class="col-12 col-md-6">
+            <%= form.input :period_end, html5: true, input_html: { data: { order_equipament_target: "periodEnd" } } %>
+          </div>
+
+          <div class="col-12">
+            <%= form.input :equipament_id, required: true do %>
+              <div role="combobox">
+                <input type="text" class="form-control" data-order-equipament-target="input" value="<%= form.object.customer&.name %>" />
+                <%= form.input_field :equipament_id, as: :hidden, data: { order_equipament_target: "hidden" } %>
+                <ul class="list-group" data-order-equipament-target="results"></ul>
+              </div>
+              <%= form.full_error :equipament %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer d-flex justify-content-between">
+        <%= link_to "Voltar", orders_path, class: "btn btn-secondary" %>
+        <%= form.button :button, class: "btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>
