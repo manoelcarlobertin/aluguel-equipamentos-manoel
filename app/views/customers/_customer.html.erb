@@ -1,22 +1,21 @@
 <div id="<%= dom_id customer %>">
   <p>
-    <strong>Name:</strong>
+    <strong><%= t('activerecord.attributes.customer.name') %>:</strong>
     <%= customer.name %>
   </p>
 
   <p>
-    <strong>Dob:</strong>
+    <strong><%= t('activerecord.attributes.customer.dob') %>:</strong>
     <%= customer.dob %>
   </p>
 
   <p>
-    <strong>Email:</strong>
+    <strong><%= t('activerecord.attributes.customer.email') %>:</strong>
     <%= customer.email %>
   </p>
 
   <p>
-    <strong>Mobile phone:</strong>
+    <strong><%= t('activerecord.attributes.customer.mobile_phone') %>:</strong>
     <%= customer.mobile_phone %>
   </p>
-
 </div>

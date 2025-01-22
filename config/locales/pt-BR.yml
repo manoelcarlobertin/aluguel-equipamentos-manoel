@@ -1,0 +1,22 @@
+pt-BR:
+  devise:
+    failure:
+      unauthenticated: 'Você precisa fazer login ou se registrar antes de continuar.'
+      customer:
+        unauthenticated: 'Você precisa fazer login como cliente antes de continuar.'
+  hello: "Olá, mundo!"
+  activerecord:
+    attributes:
+      customer:
+        name: "Nome"
+        dob: "Data de Nascimento"
+        email: "E-mail"
+        mobile_phone: "Celular"
+        address: "Endereço"
+        password: "Senha"
+        password_confirmation: "Confirmar Senha"
+        remember_me: "Lembre-me"
+        reset_password_sent_instructions: "Um link para redefinição de senha foi enviado para seu e-mail. Verifique sua caixa de entrada."
+        reset_password_instructions: "Digite seu e-mail para receber instruções de redefinição de senha."
+        signed_up_but_inactive: "Sua conta ainda não foi ativada. Verifique seu e-mail para ativar sua conta."
+        signed_up_but_locked: "Sua conta foi bloqueada. Entre em contato com o administrador."
