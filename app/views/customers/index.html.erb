@@ -1,16 +1,34 @@
-<p style="color: green"><%= notice %></p>
+<!-- Mensagem de notificação -->
+<% if notice.present? %>
+  <div class="alert alert-success">
+    <%= notice %>
+  </div>
+<% end %>
 
-<% content_for :title, "Customers" %>
+<!-- Título da página -->
+<% content_for :title, "Clientes" %>
 
-<h1>Customers</h1>
+<h1 class="page-title">Lista de Clientes</h1>
 
-<div id="customers">
-  <% @customers.each do |customer| %>
-    <%= render customer %>
-    <p>
-      <%= link_to "Show this customer", customer %>
-    </p>
+<!-- Lista de clientes em cards -->
+<div id="customers" class="customer-list">
+  <% if @customers.any? %>
+    <% @customers.each do |customer| %>
+      <div class="customer-card">
+        <h6 class="customer-name">Nome: <strong><%= customer.name.capitalize %></strong></h6>
+        <p class="customer-email"><strong>Email:</strong> <%= customer.email %></p>
+        <p class="customer-phone"><strong>Telefone:</strong> <%= customer.mobile_phone %></p>
+        <div class="customer-actions">
+          <%= link_to "Detalhes", customer, class: "btn btn-primary" %>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <p class="no-customers">Nenhum cliente cadastrado.</p>
   <% end %>
 </div>
 
-<%= link_to "New customer", new_customer_path %>
+<!-- Link para cadastrar novo cliente -->
+<div class="new-customer-link">
+  <%= link_to "Cadastrar Novo Cliente", new_customer_path, class: "btn btn-primary" %>
+</div>

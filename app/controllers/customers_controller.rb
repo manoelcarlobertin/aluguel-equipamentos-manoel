@@ -3,7 +3,7 @@ class CustomersController < ApplicationController
 
   # GET /customers or /customers.json
   def index
-    @customers = Customer.all
+    @customers = Customer.order(created_at: :desc) # o último criado é o primero da lista
   end
 
   # GET /customers/1 or /customers/1.json

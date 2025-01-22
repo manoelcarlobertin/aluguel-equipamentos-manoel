@@ -1,16 +1,28 @@
-
-<%= simple_form_for(@customer) do |f| %>
-  <%= f.error_notification %>
-  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
-
-  <div class="form-inputs">
-    <%= f.input :name %>
-    <%= f.input :dob %>
-    <%= f.input :email %>
-    <%= f.input :mobile_phone %>
+<%= simple_form_for(@customer, html: { class: "form-container" }) do |f| %>
+  <!-- Exibição de erros gerais -->
+  <div class="alert alert-danger">
+    <%= f.error_notification %>
+    <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
   </div>
 
+  <!-- Campos do formulário -->
+  <div class="form-inputs">
+    <div class="form-group">
+      <%= f.input :name, label: "Nome Completo", placeholder: "Digite seu nome completo", input_html: { class: "form-control" } %>
+    </div>
+    <div class="form-group">
+      <%= f.input :dob, label: "Data de Nascimento", placeholder: "DD/MM/AAAA", html5: true, input_html: { class: "form-control" } %>
+    </div>
+    <div class="form-group">
+      <%= f.input :email, label: "E-mail", placeholder: "Digite seu e-mail", input_html: { class: "form-control" } %>
+    </div>
+    <div class="form-group">
+      <%= f.input :mobile_phone, label: "Celular", placeholder: "(DDD) 12345-6789", input_html: { class: "form-control" } %>
+    </div>
+  </div>
+
+  <!-- Botão de ação -->
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, "Enviar", class: "btn btn-primary btn-block" %>
   </div>
 <% end %>
