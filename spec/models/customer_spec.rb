@@ -3,12 +3,14 @@ require 'rails_helper'
 RSpec.describe Customer, type: :model do
   # Teste de validações
   describe "validations" do
+    let(:customer) { Customer.new(name: "Jane Doe", dob: "1990-01-01", email: "jane.doe@example.com", mobile_phone: "1234567890") }
+
     it "is valid with valid attributes" do
       customer = Customer.new(
         name: "Jane Doe",
         dob: "1990-01-01",
         email: "jane.doe@example.com",
-        mobile_phone: "123-456-7890"
+        mobile_phone: "1234567890"
       )
       expect(customer).to be_valid
     end
