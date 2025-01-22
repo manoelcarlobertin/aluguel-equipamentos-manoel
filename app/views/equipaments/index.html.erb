@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Equipaments" %>
+
+<h1>Equipaments</h1>
+
+<div id="equipaments">
+  <% @equipaments.each do |equipament| %>
+    <%= render equipament %>
+    <p>
+      <%= link_to "Show this equipament", equipament %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New equipament", new_equipament_path %>

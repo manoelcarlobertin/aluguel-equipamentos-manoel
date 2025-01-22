@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @equipament %>
+
+<div>
+  <%= link_to "Edit this equipament", edit_equipament_path(@equipament) %> |
+  <%= link_to "Back to equipaments", equipaments_path %>
+
+  <%= button_to "Destroy this equipament", @equipament, method: :delete %>
+</div>
