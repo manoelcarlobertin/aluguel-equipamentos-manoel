@@ -48,11 +48,13 @@ group :development do
 end
 
 group :test do
+  gem "database_cleaner-active_record", '~> 2.0'
   gem "factory_bot_rails"
   gem "faker"
   gem "cpf_faker"
   gem "dotenv-rails"
   gem "tty-spinner"
+  gem "rails-controller-testing"
 end
 
 gem "simple_form", "~> 5.3"

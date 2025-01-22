@@ -26,6 +26,7 @@ class EquipamentsController < ApplicationController
     if @equipament.save
       redirect_to @equipament, notice: "Equipament was successfully created."
     else
+      Rails.logger.debug @equipament.errors.full_messages
       render :new, status: :unprocessable_entity
     end
   end
