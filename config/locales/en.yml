@@ -28,4 +28,33 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  activerecord:
+    attributes:
+      customer:
+        name: Customer Name
+        dob: Date of Birth
+        email: Customer Email
+        mobile_phone: Customer Mobile Phone
+        home_phone: Customer Home Phone
+        work_phone: Customer Work Phone
+        address: Customer Address
+        city: City
+        state: State
+        zip_code: Zip Code
+        country: Country
+        gender: Gender
+        nationality: Nationality
+        id_type: ID Type
+        id_number: ID Number
+        passport_number: Passport Number
+        birth_certificate_number: Birth Certificate Number
+        driving_license_number: Driving License Number
+        marital_status: Marital Status
+        spouse_name: Spouse Name
+        spouse_dob: Spouse Date of Birth
+        spouse_address: Spouse Address
+        spouse_city: Spouse City
+        spouse_state: Spouse State
+        spouse_zip_code: Spouse Zip Code
+        spouse_country: Spouse Country
+        children: Children

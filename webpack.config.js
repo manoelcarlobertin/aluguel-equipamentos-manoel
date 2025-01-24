@@ -1,21 +1,21 @@
-const path    = require("path")
-const webpack = require("webpack")
+const path = require("path");
 
 module.exports = {
-  mode: "production",
-  devtool: "source-map",
-  entry: {
-    application: "./app/javascript/application.js"
-  },
+  mode: "production", // ou "development", dependendo do ambiente
+  entry: "./app/javascript/application.js", // ponto de entrada
   output: {
-    filename: "[name].js",
-    sourceMapFilename: "[file].map",
-    chunkFormat: "module",
+    filename: "application.js",
     path: path.resolve(__dirname, "app/assets/builds"),
   },
-  plugins: [
-    new webpack.optimize.LimitChunkCountPlugin({
-      maxChunks: 1
-    })
-  ]
-}
+  module: {
+    rules: [
+      {
+        test: /\.css$/i, // Processa arquivos .css
+        use: ["style-loader", "css-loader"], // Aplica os loaders
+      },
+    ],
+  },
+  resolve: {
+    extensions: [".js", ".css"], // Resolve JS e CSS
+  },
+};

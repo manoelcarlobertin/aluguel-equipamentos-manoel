@@ -1,4 +1,5 @@
 class EquipamentsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_equipament, only: %i[ show edit update destroy ]
 
   # GET /equipaments
@@ -17,14 +18,16 @@ class EquipamentsController < ApplicationController
 
   # GET /equipaments/1/edit
   def edit
+    authorize @equipament
   end
 
   # POST /equipaments
   def create
     @equipament = Equipament.new(equipament_params)
+    authorize @equipament
 
     if @equipament.save
-      redirect_to @equipament, notice: "Equipament was successfully created."
+      redirect_to equipaments_path, notice: "Equipament was successfully created."
     else
       Rails.logger.debug @equipament.errors.full_messages
       render :new, status: :unprocessable_entity
@@ -33,6 +36,8 @@ class EquipamentsController < ApplicationController
 
   # PATCH/PUT /equipaments/1
   def update
+    authorize @equipament
+
     if @equipament.update(equipament_params)
       redirect_to @equipament, notice: "Equipament was successfully updated.", status: :see_other
     else
@@ -42,6 +47,8 @@ class EquipamentsController < ApplicationController
 
   # DELETE /equipaments/1
   def destroy
+    authorize @equipament
+
     @equipament.destroy!
     redirect_to equipaments_url, notice: "Equipament was successfully destroyed.", status: :see_other
   end

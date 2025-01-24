@@ -20,7 +20,7 @@ RSpec.describe EquipamentsController, type: :controller do
       it "returns a successful response and assigns @equipaments" do
         get :index
         expect(response).to be_successful
-        expect(assigns(:equipaments)).to eq([equipament])
+        expect(assigns(:equipaments)).to eq([ equipament ])
       end
     end
 

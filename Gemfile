@@ -1,5 +1,4 @@
 source "https://rubygems.org"
-
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.2.2", ">= 7.2.2.1"
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
@@ -35,9 +34,7 @@ gem "image_processing", "~> 1.2"
 
 group :development, :test do
   gem "rspec-rails"
-  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
- # gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
- # gem "brakeman", require: false
+
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 end
@@ -48,7 +45,7 @@ group :development do
 end
 
 group :test do
-  gem "database_cleaner-active_record", '~> 2.0'
+  gem "database_cleaner-active_record", "~> 2.0"
   gem "factory_bot_rails"
   gem "faker"
   gem "cpf_faker"
@@ -58,7 +55,6 @@ group :test do
 end
 
 gem "simple_form", "~> 5.3"
-gem "devise", "~> 4.8"
 gem "cpf_cnpj"
 gem "pagy"
 gem "pundit", "~> 2.3"
@@ -87,3 +83,6 @@ gem "font-awesome-sass"
 
 # Suporte a internacionalização
 gem "i18n"
+
+gem "devise", "~> 4.9"
+gem "devise-i18n", "~> 1.12"

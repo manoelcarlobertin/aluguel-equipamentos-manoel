@@ -1,4 +1,5 @@
 class CustomersController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_customer, only: %i[ show edit update destroy ]
 
   # GET /customers or /customers.json
@@ -17,15 +18,17 @@ class CustomersController < ApplicationController
 
   # GET /customers/1/edit
   def edit
+    authorize @customer
   end
 
   # POST /customers or /customers.json
   def create
     @customer = Customer.new(customer_params)
+    authorize @customer
 
     respond_to do |format|
       if @customer.save
-        format.html { redirect_to @customer, notice: "Customer was successfully created." }
+        format.html { redirect_to customers_path, notice: "Customer was successfully created." }
         format.json { render :show, status: :created, location: @customer }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -36,6 +39,8 @@ class CustomersController < ApplicationController
 
   # PATCH/PUT /customers/1 or /customers/1.json
   def update
+    authorize @customer
+
     respond_to do |format|
       if @customer.update(customer_params)
         format.html { redirect_to @customer, notice: "Customer was successfully updated." }
@@ -49,6 +54,8 @@ class CustomersController < ApplicationController
 
   # DELETE /customers/1 or /customers/1.json
   def destroy
+    authorize @customer
+
     @customer.destroy!
 
     respond_to do |format|
