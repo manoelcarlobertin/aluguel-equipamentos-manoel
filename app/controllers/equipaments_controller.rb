@@ -3,8 +3,19 @@ class EquipamentsController < ApplicationController
   before_action :set_equipament, only: %i[ show edit update destroy ]
 
   # GET /equipaments
+  # def index
+  #   @equipaments = Equipament.all
+  # end
+
+  layout "admin"
+
   def index
-    @equipaments = Equipament.all
+    @equipaments = if params[:search].present?
+                      Equipament.where("LOWER(name) LIKE ?", "%#{params[:search].downcase}%")
+                   else
+                      Equipament.order(:name, :serial_number)
+                   end
+    authorize(@equipaments)
   end
 
   # GET /equipaments/1

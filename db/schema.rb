@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_24_200949) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_27_042913) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -67,6 +67,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_24_200949) do
     t.index ["serial_number"], name: "index_equipaments_on_serial_number", unique: true
   end
 
+  create_table "schedules", force: :cascade do |t|
+    t.integer "equipament_id", null: false
+    t.string "status", default: "pending"
+    t.date "period_start"
+    t.date "period_end"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["equipament_id"], name: "index_schedules_on_equipament_id"
+    t.index ["status"], name: "index_schedules_on_status"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -81,4 +92,5 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_24_200949) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "schedules", "equipaments"
 end
