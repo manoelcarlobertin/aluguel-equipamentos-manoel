@@ -34,7 +34,9 @@ gem "image_processing", "~> 1.2"
 
 group :development, :test do
   gem "rspec-rails"
-
+  # Corrigido
+  gem "factory_bot_rails", "~> 6.2"
+  gem "shoulda-matchers", "~> 6.4.0"
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 end
@@ -46,7 +48,6 @@ end
 
 group :test do
   gem "database_cleaner-active_record", "~> 2.0"
-  gem "factory_bot_rails"
   gem "faker"
   gem "cpf_faker"
   gem "dotenv-rails"

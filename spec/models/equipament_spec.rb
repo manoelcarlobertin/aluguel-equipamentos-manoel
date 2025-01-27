@@ -1,5 +1,11 @@
 require 'rails_helper'
 
+RSpec.describe Equipament, type: :model do
+  it { should validate_presence_of(:name) }
+  it { should validate_uniqueness_of(:serial_number) }
+  it { should belong_to(:category) }
+end
+
 RSpec.describe EquipamentsController, type: :controller do
   let(:valid_attributes) do
     {
@@ -47,16 +53,22 @@ RSpec.describe EquipamentsController, type: :controller do
     end
   end
 
-  describe "POST #create" do
-    # context "with valid parameters" do
-    #   it "creates a new Equipament and redirects to it" do
-    #     expect {
-    #       post :create, params: { equipament: valid_attributes }
-    #     }.to change(Equipament, :count).by(1)
+  describe 'POST #create' do
+    context 'com parâmetros válidos e disponibilidade inicial' do
+      it 'cria um novo equipamento como disponível para empréstimo' do
+        valid_params = { equipament: attributes_for(:equipament, available_for_loan: true) }
 
-    #     expect(response).to redirect_to(Equipament.last)
-    #   end
-    # end
+        expect {
+          post :create, params: valid_params
+        }.to change(Equipament, :count).by(1)
+
+        new_equipament = Equipament.last
+        expect(new_equipament.available_for_loan?).to be true
+        expect(response).to redirect_to(equipaments_path)
+        expect(flash[:notice]).to eq('Equipament was successfully created.')
+      end
+    end
+  end
 
     context "with invalid parameters" do
       it "does not create a new Equipament" do
@@ -88,4 +100,20 @@ RSpec.describe EquipamentsController, type: :controller do
       end
     end
   end
-end
+
+  describe '#available_for_loan?' do
+    it 'retorna true se o status for available' do
+      equipament = build(:equipament, status: "available")
+      expect(equipament.available_for_loan?).to be true
+    end
+
+    it 'retorna false se o status for rented' do
+      equipament = build(:equipament, status: "rented")
+      expect(equipament.available_for_loan?).to be false
+    end
+
+    it 'retorna false se o status for maintenance' do
+      equipament = build(:equipament, status: "maintenance")
+      expect(equipament.available_for_loan?).to be false
+    end
+  end

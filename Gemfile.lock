@@ -317,6 +317,8 @@ GEM
       sprockets-rails
       tilt
     securerandom (0.4.1)
+    shoulda-matchers (6.4.0)
+      activesupport (>= 5.2.0)
     sidekiq (7.3.8)
       base64
       connection_pool (>= 2.3.0)
@@ -378,7 +380,7 @@ DEPENDENCIES
   devise (~> 4.9)
   devise-i18n (~> 1.12)
   dotenv-rails
-  factory_bot_rails
+  factory_bot_rails (~> 6.2)
   faker
   font-awesome-sass
   i18n
@@ -396,6 +398,7 @@ DEPENDENCIES
   rspec-rails
   rubocop-rails-omakase
   sassc-rails
+  shoulda-matchers (~> 6.4.0)
   sidekiq
   simple_form (~> 5.3)
   sprockets-rails
