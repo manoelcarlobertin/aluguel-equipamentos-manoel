@@ -1,15 +1,3 @@
-# This file is auto-generated from the current state of the database. Instead
-# of editing this file, please use the migrations feature of Active Record to
-# incrementally modify your database, and then regenerate this schema definition.
-#
-# This file is the source Rails uses to define your schema when running `bin/rails
-# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
-# be faster and is potentially less error prone than running all of your
-# migrations from scratch. Old migrations may fail to apply correctly if those
-# migrations use external dependencies or application code.
-#
-# It's strongly recommended that you check this file into your version control system.
-
 ActiveRecord::Schema[7.2].define(version: 2025_01_31_032614) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -79,17 +67,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_31_032614) do
     t.index ["serial_number"], name: "index_equipaments_on_serial_number", unique: true
   end
 
-  create_table "loans", force: :cascade do |t|
-    t.integer "equipament_id", null: false
-    t.integer "user_id", null: false
-    t.datetime "start_date"
-    t.datetime "end_date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["equipament_id"], name: "index_loans_on_equipament_id"
-    t.index ["user_id"], name: "index_loans_on_user_id"
-  end
-
   create_table "orders", force: :cascade do |t|
     t.integer "customer_id", null: false
     t.integer "product_id", null: false
@@ -131,8 +108,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_31_032614) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "loans", "equipaments"
-  add_foreign_key "loans", "users"
   add_foreign_key "orders", "customers"
   add_foreign_key "orders", "products"
   add_foreign_key "schedules", "equipaments"

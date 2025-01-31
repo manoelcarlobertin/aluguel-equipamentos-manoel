@@ -1,3 +1,3 @@
 class Schedule < ApplicationRecord
-  belongs_to :equipament_loan
+  belongs_to :equipament
 end
