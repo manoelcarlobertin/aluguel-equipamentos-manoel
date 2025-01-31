@@ -1,4 +1,5 @@
 source "https://rubygems.org"
+# ruby 3.2.2
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.2.2", ">= 7.2.2.1"
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
@@ -33,10 +34,11 @@ gem "bootsnap", require: false
 gem "image_processing", "~> 1.2"
 
 group :development, :test do
-  gem "rspec-rails"
   # Corrigido
-  gem "factory_bot_rails", "~> 6.2"
-  gem "shoulda-matchers", "~> 6.4.0"
+  gem "rspec-rails"
+  gem "factory_bot_rails"
+  gem "shoulda-matchers"
+  gem "faker"
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 end
@@ -48,7 +50,6 @@ end
 
 group :test do
   gem "database_cleaner-active_record", "~> 2.0"
-  gem "faker"
   gem "cpf_faker"
   gem "dotenv-rails"
   gem "tty-spinner"

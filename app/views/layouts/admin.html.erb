@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Admin | Minha Aplicação</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+  <body>
+    <header>
+
+      <%= render "layouts/shared/header_admin" %>
+      <%#= link_to "Minha Aplicação", root_path %>
+      <h6>.</h6>
+      <h3>Painel Administrativo</h3>
+      </header>
+
+    <main>
+      <!-- Menu -->
+      <%= render "layouts/shared/menu" %>
+
+      <!-- Rota para o Cadastro de Clientes -->
+      <%#= link_to "Cadastrar Cliente", new_admin_client_path %>
+
+      <!-- Rota para a Listagem de Clientes -->
+      <%#= link_to "Listar Clientes", admin_clients_path %>
+
+      <!-- Rota para o Cadastro de Equipamentos -->
+      <%#= link_to "Cadastrar Equipamento", new_admin_equipment_path %>
+
+      <!-- Rota para a Listagem de Equipamentos -->
+      <%#= link_to "Listar Equipamentos", admin_equipments_path %>
+
+      <!-- Rota para o Cadastro de Manutenções -->
+      <%#= link_to "Cadastrar Manutenção", new_admin_maintenance_path %>
+
+      <!-- Rota para a Listagem de Manutenções -->
+      <%#= link_to "Listar Manutenções", admin_maintenances_path %>
+
+      <!-- Rota para o Logout -->
+      <%#= link_to "Logout", destroy_user_session_path, method: :delete %>
+
+      <!-- Conteúdo da Página -->
+      <%= yield %>
+    </main>
+
+    <footer>
+      <%= render "layouts/shared/footer_admin" %>
+    </footer>
+  </body>
+</html>

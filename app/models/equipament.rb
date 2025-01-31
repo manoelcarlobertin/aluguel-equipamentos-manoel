@@ -1,10 +1,19 @@
 class Equipament < ApplicationRecord
   # Enum para o status do equipamento
-  enum status: { available: "available", rented: "rented", maintenance: "maintenance" }
+  enum status: { available: 0, rented: 1, maintenance: 2 }
 
-  has_many :equipament_loans
-  has_many :loans, through: :equipament_loans
-  has_many :schedule, through: :equipament_loans
+  # Relacionamentos
+  # belongs_to :location
+  belongs_to :user # Adicionado para relacionar com o User
+  belongs_to :category
+  belongs_to :equipament
+  belongs_to :schedule
+
+  # has_many :rentals
+  # has_many :users, through: :rentals
+  # has_many :reservations
+  # has_many :users, through: :reservations
+ 
   has_rich_text :description
   has_one_attached :image
 
@@ -16,14 +25,14 @@ class Equipament < ApplicationRecord
 
   # Método para verificar se o equipamento está em manutenção
   def under_maintenance?
-    maintenance? # Método gerado automaticamente pelo enum
+    status == "maintenance" # Método gerado automaticamente pelo enum
   end
   # Método para verificar se o equipamento está alugado
   def rented?
-    rented? # Método gerado automaticamente pelo enum
+    status == "rented" # Método gerado automaticamente pelo enum
   end
   # Método para verificar se o equipamento está disponível para empréstimo
   def available_for_loan?
-    available? # Método gerado automaticamente pelo enum
+    status == "available"
   end
 end

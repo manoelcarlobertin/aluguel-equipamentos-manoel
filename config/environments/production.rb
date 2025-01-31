@@ -2,7 +2,8 @@ require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-
+  config.assets.js_compressor = :uglifier # Minificação de JS
+  config.assets.css_compressor = :sass # Minificação de CSS
   # Code is not reloaded between requests.
   config.enable_reloading = false
 

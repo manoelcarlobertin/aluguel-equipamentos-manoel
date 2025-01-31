@@ -1,16 +1,6 @@
-@use 'bootstrap/scss/bootstrap' as bootstrap;
 @use 'bootstrap-icons/font/bootstrap-icons';
-@import '~@fortawesome/fontawesome-free/css/all.css';
-//@import 'custom';
-@import 'actiontext.css';
-
-@import "font-awesome-sprockets";
-@import "font-awesome";
-
-@import 'bootstrap/scss/bootstrap';
-@import 'bootstrap-icons/font/bootstrap-icons';
-
-@import "template/style";
+@use 'bootstrap/scss/bootstrap' as bootstrap;
+@use 'template/style';
 body {
   padding-top: 60px;
   /* Altura do navbar */

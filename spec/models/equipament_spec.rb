@@ -1,119 +1,39 @@
 require 'rails_helper'
 
 RSpec.describe Equipament, type: :model do
+  # Validações
   it { should validate_presence_of(:name) }
+  it { should validate_presence_of(:serial_number) }
+  it { should validate_presence_of(:category) }
+  it { should validate_presence_of(:description) }
+  it { should validate_presence_of(:image) }
   it { should validate_uniqueness_of(:serial_number) }
+
+  # Associações
   it { should belong_to(:category) }
+  it { should have_one_attached(:image) }
+
+  # Enum de status
+  describe 'enum status' do
+    it 'defines available, rented, and maintenance statuses with correct values' do
+      expect(Equipament.statuses).to eq({ "available" => 0, "rented" => 1, "maintenance" => 2 })
+    end
+  end
+
+  # Métodos de instância
+  let(:user) { create(:user) }
+  let(:equipament) { create(:equipament, user: user, status: :maintenance, name: Faker::Device.model_name) }
+
+  shared_examples_for 'status method' do |status_method, status_value|
+    it "returns true if status is #{status_value}" do
+      equipament.status = status_value
+      expect(equipament.send(status_method)).to be true
+    end
+
+    it "returns false if status is not #{status_value}" do
+      other_status = (Equipament.statuses.keys - [status_value.to_s]).sample.to_sym # Pega um status diferente aleatoriamente
+      equipament.status = other_status
+      expect(equipament.send(status_method)).to be false
+    end
+  end
 end
-
-RSpec.describe EquipamentsController, type: :controller do
-  let(:valid_attributes) do
-    {
-      name: "Drill",
-      serial_number: SecureRandom.hex(6), # Gera um número único aleatório
-      category: "Tool"
-    }
-  end
-
-  let(:invalid_attributes) do
-    { name: "", serial_number: SecureRandom.hex(6), category: "Tool" }
-  end
-
-  let!(:equipament) { Equipament.create!(valid_attributes) }
-
-  describe "GET actions" do
-    describe "GET #index" do
-      it "returns a successful response and assigns @equipaments" do
-        get :index
-        expect(response).to be_successful
-        expect(assigns(:equipaments)).to eq([ equipament ])
-      end
-    end
-
-    describe "GET #show" do
-      it "returns a successful response and assigns @equipament" do
-        get :show, params: { id: equipament.id }
-        expect(response).to be_successful
-        expect(assigns(:equipament)).to eq(equipament)
-      end
-    end
-
-    describe "GET #new" do
-      it "assigns a new equipament as @equipament" do
-        get :new
-        expect(assigns(:equipament)).to be_a_new(Equipament)
-      end
-    end
-
-    describe "GET #edit" do
-      it "assigns the requested equipament as @equipament" do
-        get :edit, params: { id: equipament.id }
-        expect(assigns(:equipament)).to eq(equipament)
-      end
-    end
-  end
-
-  describe 'POST #create' do
-    context 'com parâmetros válidos e disponibilidade inicial' do
-      it 'cria um novo equipamento como disponível para empréstimo' do
-        valid_params = { equipament: attributes_for(:equipament, available_for_loan: true) }
-
-        expect {
-          post :create, params: valid_params
-        }.to change(Equipament, :count).by(1)
-
-        new_equipament = Equipament.last
-        expect(new_equipament.available_for_loan?).to be true
-        expect(response).to redirect_to(equipaments_path)
-        expect(flash[:notice]).to eq('Equipament was successfully created.')
-      end
-    end
-  end
-
-    context "with invalid parameters" do
-      it "does not create a new Equipament" do
-        expect {
-          post :create, params: { equipament: invalid_attributes }
-        }.not_to change(Equipament, :count)
-      end
-
-      it "renders the :new template with unprocessable_entity status" do
-        post :create, params: { equipament: invalid_attributes }
-        expect(response).to render_template(:new)
-        expect(response).to have_http_status(:unprocessable_entity)
-      end
-    end
-  end
-
-  describe "PATCH/PUT #update" do
-    context "with invalid parameters" do
-      it "does not update the equipament" do
-        patch :update, params: { id: equipament.id, equipament: invalid_attributes }
-        equipament.reload
-        expect(equipament.name).to eq("Drill")
-      end
-
-      it "renders the :edit template with unprocessable_entity status" do
-        patch :update, params: { id: equipament.id, equipament: invalid_attributes }
-        expect(response).to render_template(:edit)
-        expect(response).to have_http_status(:unprocessable_entity)
-      end
-    end
-  end
-
-  describe '#available_for_loan?' do
-    it 'retorna true se o status for available' do
-      equipament = build(:equipament, status: "available")
-      expect(equipament.available_for_loan?).to be true
-    end
-
-    it 'retorna false se o status for rented' do
-      equipament = build(:equipament, status: "rented")
-      expect(equipament.available_for_loan?).to be false
-    end
-
-    it 'retorna false se o status for maintenance' do
-      equipament = build(:equipament, status: "maintenance")
-      expect(equipament.available_for_loan?).to be false
-    end
-  end

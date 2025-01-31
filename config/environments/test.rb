@@ -1,67 +1,79 @@
 require "active_support/core_ext/integer/time"
 
-# The test environment is used exclusively to run your application's
-# test suite. You never need to work with it otherwise. Remember that
-# your test database is "scratch space" for the test suite and is wiped
-# and recreated between test runs. Don't rely on the data there!
+# O ambiente de teste é usado exclusivamente para executar a suíte de testes da aplicação.
+# Você nunca precisa trabalhar com ele fora disso. Lembre-se de que o banco de dados de teste
+# é um "espaço temporário" para a suíte de testes e é limpo e recriado entre execuções de testes.
+# Não dependa dos dados presentes nele!
 
 Rails.application.configure do
-  # Settings specified here will take precedence over those in config/application.rb.
+  # Configurações especificadas aqui têm precedência sobre as definidas em config/application.rb.
+  config.cache_classes = false
 
-  # While tests run files are not watched, reloading is not necessary.
+  # O modo de desenvolvimento é desativado por padrão para evitar problemas com
+  # o cache, o log e a saída de erros. Em um ambiente de produção, você deve habilitar
+
+  config.raise_errors_for_deprecations = true
+  # Transforma avisos de depreciação em erros para obter um backtrace completo
+
+  # Define os caminhos para carregar fixtures.
+  config.fixture_paths = [
+    "#{Rails.root}/test/fixtures",
+    "#{Rails.root}/spec/models"
+  ]
+
+  # Durante a execução dos testes, os arquivos não são monitorados, e a recarga não é necessária.
   config.enable_reloading = false
 
-  # Eager loading loads your entire application. When running a single test locally,
-  # this is usually not necessary, and can slow down your test suite. However, it's
-  # recommended that you enable it in continuous integration systems to ensure eager
-  # loading is working properly before deploying your code.
+  # O eager loading carrega toda a aplicação. Ao executar um único teste localmente,
+  # isso geralmente não é necessário e pode tornar a suíte de testes mais lenta.
+  # No entanto, é recomendável habilitá-lo em sistemas de integração contínua (CI)
+  # para garantir que o eager loading funcione corretamente antes de implantar o código.
   config.eager_load = ENV["CI"].present?
 
-  # Configure public file server for tests with Cache-Control for performance.
-  config.public_file_server.headers = { "Cache-Control" => "public, max-age=#{1.hour.to_i}" }
+  # Configura o servidor de arquivos públicos para testes com Cache-Control para melhor desempenho.
+  config.public_file_server.headers = {
+    "Cache-Control" => "public, max-age=#{1.hour.to_i}"
+  }
 
-  # Show full error reports and disable caching.
+  # Exibe relatórios completos de erros e desabilita o cache.
   config.consider_all_requests_local = true
   config.action_controller.perform_caching = false
   config.cache_store = :null_store
 
-  # Render exception templates for rescuable exceptions and raise for other exceptions.
+  # Renderiza templates de exceção para exceções resgatáveis e levanta exceções para outras.
   config.action_dispatch.show_exceptions = :rescuable
 
-  # Disable request forgery protection in test environment.
+  # Desabilita a proteção contra falsificação de solicitações (CSRF) no ambiente de teste.
   config.action_controller.allow_forgery_protection = false
 
-  # Store uploaded files on the local file system in a temporary directory.
+  # Armazena arquivos enviados no sistema de arquivos local em um diretório temporário.
   config.active_storage.service = :test
 
-  # Disable caching for Action Mailer templates even if Action Controller
-  # caching is enabled.
+  # Desabilita o cache para templates do Action Mailer, mesmo que o cache do Action Controller esteja habilitado.
   config.action_mailer.perform_caching = false
 
-  # Tell Action Mailer not to deliver emails to the real world.
-  # The :test delivery method accumulates sent emails in the
-  # ActionMailer::Base.deliveries array.
+  # Define o método de entrega de e-mails como :test, que acumula e-mails enviados no array ActionMailer::Base.deliveries.
   config.action_mailer.delivery_method = :test
 
-  # Unlike controllers, the mailer instance doesn't have any context about the
-  # incoming request so you'll need to provide the :host parameter yourself.
+  # Define as opções padrão de URL para o Action Mailer.
+  # Como os mailers não têm contexto da requisição, é necessário fornecer o parâmetro :host manualmente.
   config.action_mailer.default_url_options = { host: "www.example.com" }
 
-  # Print deprecation notices to the stderr.
+  # Exibe avisos de depreciação no stderr.
   config.active_support.deprecation = :stderr
 
-  # Raise exceptions for disallowed deprecations.
+  # Levanta exceções para depreciações não permitidas.
   config.active_support.disallowed_deprecation = :raise
 
-  # Tell Active Support which deprecation messages to disallow.
+  # Define quais mensagens de depreciação são proibidas.
   config.active_support.disallowed_deprecation_warnings = []
 
-  # Raises error for missing translations.
+  # Levanta erros para traduções ausentes.
   # config.i18n.raise_on_missing_translations = true
 
-  # Annotate rendered view with file names.
+  # Anota a visualização renderizada com os nomes dos arquivos.
   # config.action_view.annotate_rendered_view_with_filenames = true
 
-  # Raise error when a before_action's only/except options reference missing actions.
+  # Levanta erros quando as opções only/except de before_action referenciam ações ausentes.
   config.action_controller.raise_on_missing_callback_actions = true
 end

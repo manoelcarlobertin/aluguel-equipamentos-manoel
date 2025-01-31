@@ -1,4 +1,8 @@
 class EquipamentPolicy < ApplicationPolicy
+  def index?
+    user.present?
+  end
+
   def create?
     user.present? # Permitir que apenas usuários autenticados criem equipamentos
   end

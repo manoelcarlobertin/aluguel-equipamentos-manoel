@@ -15,7 +15,8 @@
   <% if @customers.any? %>
     <% @customers.each do |customer| %>
       <div class="customer-card">
-        <h6 class="customer-name">Nome: <strong><%= customer.name.capitalize %></strong></h6>
+       <h6 class="customer-name">Nome: <strong><%= format_customer_name(customer) %></strong></h6>  <%# Usando o helper %>
+       <h6 class="customer-name">Nome: <strong><%= customer.safe_name %></strong></h6>  <%# Usando o método do model %>
         <p class="customer-email"><strong>Email:</strong> <%= customer.email %></p>
         <p class="customer-phone"><strong>Telefone:</strong> <%= customer.mobile_phone %></p>
         <div class="customer-actions">

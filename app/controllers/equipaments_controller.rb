@@ -1,38 +1,32 @@
 class EquipamentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_equipament, only: %i[ show edit update destroy ]
-
-  # GET /equipaments
-  # def index
-  #   @equipaments = Equipament.all
-  # end
-
+  before_action :set_equipament, only: %i[show edit update destroy]
   layout "admin"
 
   def index
+    # Buscar equipamentos com base na pesquisa ou listar todos
     @equipaments = if params[:search].present?
-                      Equipament.where("LOWER(name) LIKE ?", "%#{params[:search].downcase}%")
+                     Equipament.where("LOWER(name) LIKE ?", "%#{params[:search].downcase}%")
                    else
-                      Equipament.order(:name, :serial_number)
+                     Equipament.order(:name, :serial_number)
                    end
-    authorize(@equipaments)
+
+    authorize(@equipaments)  # Autoriza o acesso à lista de equipamentos
   end
 
-  # GET /equipaments/1
   def show
+    # Aqui você pode adicionar qualquer lógica extra, caso necessário
   end
 
-  # GET /equipaments/new
   def new
     @equipament = Equipament.new
+    authorize @equipament
   end
 
-  # GET /equipaments/1/edit
   def edit
     authorize @equipament
   end
 
-  # POST /equipaments
   def create
     @equipament = Equipament.new(equipament_params)
     authorize @equipament
@@ -45,7 +39,6 @@ class EquipamentsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /equipaments/1
   def update
     authorize @equipament
 
@@ -56,7 +49,6 @@ class EquipamentsController < ApplicationController
     end
   end
 
-  # DELETE /equipaments/1
   def destroy
     authorize @equipament
 
@@ -65,13 +57,14 @@ class EquipamentsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_equipament
-      @equipament = Equipament.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def equipament_params
-      params.require(:equipament).permit(:name, :serial_number, :category)
-    end
+  # Callback para configurar o equipamento com base no ID.
+  def set_equipament
+    @equipament = Equipament.find(params[:id])
+  end
+
+  # Apenas parâmetros confiáveis são permitidos.
+  def equipament_params
+    params.require(:equipament).permit(:name, :description, :status, :category_id, :serial_number, :price, :image_url)
+  end
 end

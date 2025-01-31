@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_27_051829) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_31_032614) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -49,6 +49,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_27_051829) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "categories", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index "lower(name)", name: "index_categories_on_lower_name", unique: true
+    t.index ["name"], name: "index_categories_on_name", unique: true
+  end
+
   create_table "customers", force: :cascade do |t|
     t.string "name"
     t.date "dob"
@@ -64,14 +72,44 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_27_051829) do
     t.string "category"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "status"
+    t.string "status", default: "available"
+    t.integer "category_id"
+    t.decimal "price"
+    t.string "image_url"
     t.index ["serial_number"], name: "index_equipaments_on_serial_number", unique: true
+  end
+
+  create_table "loans", force: :cascade do |t|
+    t.integer "equipament_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["equipament_id"], name: "index_loans_on_equipament_id"
+    t.index ["user_id"], name: "index_loans_on_user_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer "customer_id", null: false
+    t.integer "product_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_orders_on_customer_id"
+    t.index ["product_id"], name: "index_orders_on_product_id"
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.string "name"
+    t.decimal "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "schedules", force: :cascade do |t|
     t.integer "equipament_id", null: false
     t.string "status", default: "pending"
-    t.date "period_start"
+    t.date "period_start", default: -> { "CURRENT_DATE" }, null: false
     t.date "period_end"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -93,5 +131,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_27_051829) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "loans", "equipaments"
+  add_foreign_key "loans", "users"
+  add_foreign_key "orders", "customers"
+  add_foreign_key "orders", "products"
   add_foreign_key "schedules", "equipaments"
 end
